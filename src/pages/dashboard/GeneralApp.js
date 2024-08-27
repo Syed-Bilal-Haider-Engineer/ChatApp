@@ -1,14 +1,10 @@
 import React, {lazy, Suspense} from "react";
-
-//Dynamic routing
-const Cat = lazy(()=> import('../../components/Cat'))
+import Chats from "./Chats";
 
 const GeneralApp = () => {
   return (
     <>
-      <Suspense fallback="Loading ...">
-        <Cat/>
-      </Suspense>
+     <Chats/>
     </>
   );
 };

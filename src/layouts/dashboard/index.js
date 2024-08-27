@@ -56,10 +56,9 @@ const DashboardLayout = () => {
   const [selected, setSelected] = React.useState(0);
   const theme = useTheme()
   const { onToggleMode } = useSettings()
-  console.log("theme", theme);
-
   return (
     <>
+      <Box sx={{display:'flex'}}>
       <Box sx={{
         backgroundColor: theme.palette.background.paper,
         boxShadow: '0 0 2px rgba(0,0,0,0.25)', height: "100vh", width: 100
@@ -137,7 +136,10 @@ const DashboardLayout = () => {
           </Stack>
         </Stack>
       </Box>
-      <Outlet />
+      <Box sx={{ flexGrow: 1 }}>
+        <Outlet />
+      </Box>
+      </Box>
     </>
   );
 };
