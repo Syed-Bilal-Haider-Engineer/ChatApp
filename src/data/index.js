@@ -11,14 +11,17 @@ import {
 
 const Profile_Menu = [
   {
+    id:1,
     title: "Profile",
     icon: <User />,
   },
   {
+    id:2,
     title: "Settings",
     icon: <Gear />,
   },
   {
+    id:3,
     title: "Profile",
     icon: <SignOut />,
   },

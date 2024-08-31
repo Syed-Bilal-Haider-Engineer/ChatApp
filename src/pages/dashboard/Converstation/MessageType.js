@@ -1,7 +1,17 @@
 import {useTheme} from '@mui/material/styles'; // Correct import for Material-UI
-import {Box, Divider, IconButton, Link, Stack, Typography} from '@mui/material';
+import {
+  Box,
+  Divider,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React from 'react';
-import {DownloadSimple, Image} from 'phosphor-react';
+import {Cursor, DotsThreeVertical, DownloadSimple, Image} from 'phosphor-react';
+import {Message_options} from '../../../data';
 
 const DocMsg = (ele) => {
   const theme = useTheme();
@@ -44,6 +54,7 @@ const DocMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
+      <MsgOptions />
     </Stack>
   );
 };
@@ -101,6 +112,7 @@ const LinkMsg = (ele) => {
           </Stack>
         </Stack>
       </Box>
+      <MsgOptions />
     </Stack>
   );
 };
@@ -125,10 +137,49 @@ const TextMsg = (ele) => {
           {ele.message}
         </Typography>
       </Box>
+      <MsgOptions />
     </Stack>
   );
 };
 
+const MsgOptions = (ele) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <>
+      <DotsThreeVertical
+        size={20}
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        sx={{cursor:"pointer"}}
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <Stack spacing={2} px={1}>
+          {Message_options.map((ele) => {
+            return <MenuItem onClick={handleClick}>{ele.title}</MenuItem>;
+          })}
+        </Stack>
+      </Menu>
+    </>
+  );
+};
 const Timeline = (ele) => {
   const theme = useTheme();
   return (
@@ -143,6 +194,7 @@ const Timeline = (ele) => {
         {ele.text}
       </Typography>
       <Divider sx={{width: '46%'}} />
+      <MsgOptions />
     </Stack>
   );
 };
@@ -178,6 +230,7 @@ const MediaMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
+      <MsgOptions />
     </Stack>
   );
 };
@@ -219,6 +272,7 @@ const ReplyMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
+      <MsgOptions />
     </Stack>
   );
 };
