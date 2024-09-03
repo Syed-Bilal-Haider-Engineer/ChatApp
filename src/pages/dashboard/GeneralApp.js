@@ -1,16 +1,18 @@
 import React from 'react';
 import Chats from './Chats';
-import {Stack, Box, useTheme} from '@mui/material';
+import { Stack, Box, useTheme } from '@mui/material';
 import Converstation from '../dashboard/Converstation/index';
 import Contact from '../../components/Contact';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import SharedMessage from '../../components/SharedMessage';
+import StarredMessage from '../../components/StarredMessage';
 
 const GeneralApp = () => {
   const theme = useTheme();
-  const {sidebar} = useSelector((state) => state.app);
+  const { sidebar } = useSelector((state) => state.app);
   return (
     <>
-      <Stack direction="row" sx={{width: '100%'}}>
+      <Stack direction="row" sx={{ width: '100%' }}>
         <Chats />
         <Box
           sx={{
@@ -24,7 +26,18 @@ const GeneralApp = () => {
         >
           <Converstation />
         </Box>
-        {sidebar.open && <Contact />}
+        {sidebar.open && (() => {
+          switch (sidebar.type) {
+            case "CONTACT":
+              return <Contact/>;
+            case "SHARED":
+              return <SharedMessage/>;
+            case "STARRED":
+              return <StarredMessage/>;
+            default:
+              break;
+          }
+        })()}
       </Stack>
     </>
   );

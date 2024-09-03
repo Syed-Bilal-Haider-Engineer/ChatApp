@@ -11,7 +11,7 @@ const Conversation = () => {
          <Header/>
       {/* Chat message area */}
       <Box sx={{width:'100%', flexGrow:1, height:'100%', overflowY:'scroll'}}>
-         <Chat/>
+         <Chat menu={true}/>
       </Box>
       {/* Chat footer */}
       <Footer/>

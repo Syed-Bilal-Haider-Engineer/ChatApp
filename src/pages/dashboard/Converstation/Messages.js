@@ -3,7 +3,7 @@ import React from 'react';
 import {Chat_History} from '../../../data';
 import {MediaMsg, TextMsg, Timeline, ReplyMsg, LinkMsg, DocMsg} from './MessageType';
 
-const Chat = () => {
+const Chat = ({menu}) => {
   const renderChatItem = (ele) => {
     switch (ele.type) {
       case 'divider':
@@ -11,15 +11,15 @@ const Chat = () => {
       case 'msg':
         switch (ele.subtype) {
           case 'img':
-            return <MediaMsg key={ele.id} {...ele} />;
+            return <MediaMsg key={ele.id} {...ele} menu={menu} />;
           case 'doc':
-            return <DocMsg key={ele.id} {...ele}/>;
+            return <DocMsg key={ele.id} {...ele} menu={menu} />;
           case 'link':
-            return <LinkMsg key={ele.id} {...ele} />;
+            return <LinkMsg key={ele.id} {...ele} menu={menu} />;
           case 'reply':
-            return <ReplyMsg key={ele.id} {...ele} />;
+            return <ReplyMsg key={ele.id} {...ele} menu={menu} />;
           default:
-            return <TextMsg key={ele.id} {...ele} />;
+            return <TextMsg key={ele.id} {...ele} menu={menu} />;
           }
       default:
         return null;
@@ -33,7 +33,11 @@ const Chat = () => {
       }}
     >
       <Stack spacing={3}>
-        {Chat_History.map((ele) => renderChatItem(ele))}
+        {Chat_History.map((ele,index) => (
+          <div key={index}>
+            {renderChatItem(ele)}
+          </div>
+        ))}
       </Stack>
     </Box>
   );

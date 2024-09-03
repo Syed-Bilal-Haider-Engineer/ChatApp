@@ -13,7 +13,7 @@ import React from 'react';
 import { DotsThreeVertical, DownloadSimple, Image} from 'phosphor-react';
 import {Message_options} from '../../../data';
 
-const DocMsg = (ele) => {
+const DocMsg = (ele, {menu}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={ele.incoming ? 'start' : 'end'}>
@@ -54,12 +54,12 @@ const DocMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
-      <MsgOptions />
+     {menu && <MsgOptions />} 
     </Stack>
   );
 };
 
-const LinkMsg = (ele) => {
+const LinkMsg = (ele, {menu}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={ele.incoming ? 'start' : 'end'}>
@@ -83,7 +83,7 @@ const LinkMsg = (ele) => {
             }}
           >
             <img
-              src={ele.img}
+              src={ele.img || 'https://i.imgur.com/CzXTtJV.jpeg'}
               alt={ele.message}
               style={{
                 maxHeight: 210,
@@ -112,11 +112,11 @@ const LinkMsg = (ele) => {
           </Stack>
         </Stack>
       </Box>
-      <MsgOptions />
+      {menu && <MsgOptions />} 
     </Stack>
   );
 };
-const TextMsg = (ele) => {
+const TextMsg = (ele,{menu}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={ele.incoming ? 'start' : 'end'}>
@@ -137,7 +137,7 @@ const TextMsg = (ele) => {
           {ele.message}
         </Typography>
       </Box>
-      <MsgOptions />
+      {menu && <MsgOptions />} 
     </Stack>
   );
 };
@@ -172,15 +172,15 @@ const MsgOptions = (ele) => {
         }}
       >
         <Stack spacing={2} px={1}>
-          {Message_options.map((ele) => {
-            return <MenuItem onClick={handleClick}>{ele.title}</MenuItem>;
+          {Message_options.map((ele,i) => {
+            return (<div key={i}><MenuItem onClick={handleClick}>{ele.title}</MenuItem></div>);
           })}
         </Stack>
       </Menu>
     </>
   );
 };
-const Timeline = (ele) => {
+const Timeline = (ele,menu) => {
   const theme = useTheme();
   return (
     <Stack
@@ -194,12 +194,12 @@ const Timeline = (ele) => {
         {ele.text}
       </Typography>
       <Divider sx={{width: '46%'}} />
-      <MsgOptions />
+      {menu && <MsgOptions />} 
     </Stack>
   );
 };
 
-const MediaMsg = (ele) => {
+const MediaMsg = (ele,{menu}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={ele.incoming ? 'start' : 'end'}>
@@ -230,12 +230,12 @@ const MediaMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
-      <MsgOptions />
+      {menu && <MsgOptions />} 
     </Stack>
   );
 };
 
-const ReplyMsg = (ele) => {
+const ReplyMsg = (ele,{menu}) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={ele.incoming ? 'start' : 'end'}>
@@ -272,7 +272,7 @@ const ReplyMsg = (ele) => {
           </Typography>
         </Stack>
       </Box>
-      <MsgOptions />
+      {menu && <MsgOptions />} 
     </Stack>
   );
 };
