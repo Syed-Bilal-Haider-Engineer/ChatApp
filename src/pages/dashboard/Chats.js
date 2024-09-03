@@ -15,7 +15,6 @@ import { Stack } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { ArchiveBox, CircleDashed, MagnifyingGlass } from 'phosphor-react';
 import { ChatList } from '../../data';
-import {SimpleBarStyle} from '../../components/Scrollbar'
 import 'simplebar-react/dist/simplebar.min.css';
 import SimpleBarReact from 'simplebar-react';
 const StyledBadge = styled(Badge)(({ theme }) => ({

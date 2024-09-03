@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import {Cursor, DotsThreeVertical, DownloadSimple, Image} from 'phosphor-react';
+import { DotsThreeVertical, DownloadSimple, Image} from 'phosphor-react';
 import {Message_options} from '../../../data';
 
 const DocMsg = (ele) => {
