@@ -1,24 +1,30 @@
-import React from "react";
-import Chats from "./Chats";
-import { Stack, Box, useTheme } from '@mui/material';
-import Converstation from "../dashboard/Converstation/index";
-import Contact from "../../components/Contact";
+import React from 'react';
+import Chats from './Chats';
+import {Stack, Box, useTheme} from '@mui/material';
+import Converstation from '../dashboard/Converstation/index';
+import Contact from '../../components/Contact';
+import {useSelector} from 'react-redux';
 
 const GeneralApp = () => {
   const theme = useTheme();
-  
+  const {sidebar} = useSelector((state) => state.app);
   return (
     <>
-      <Stack direction="row" sx={{ width: '100%' }}>
+      <Stack direction="row" sx={{width: '100%'}}>
         <Chats />
-        <Box sx={{ 
-            height: '100%', 
-            width: "calc(100vw - 720px)",
-            backgroundColor: theme.palette.mode === 'light' ? '#f0f4fA' : theme.palette.background.default,
-          }}>
+        <Box
+          sx={{
+            height: '100%',
+            width: sidebar.open ? 'calc(100vw - 720px)' : 'calc(100vw - 420px)',
+            backgroundColor:
+              theme.palette.mode === 'light'
+                ? '#f0f4fA'
+                : theme.palette.background.default,
+          }}
+        >
           <Converstation />
         </Box>
-        <Contact/>
+        {sidebar.open && <Contact />}
       </Stack>
     </>
   );

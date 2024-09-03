@@ -123,7 +123,6 @@ const ChatInput = ({setOpenPickerState}) => {
 const Footer = () => {
   const theme = useTheme();
   const [openPicker, setOpenPickerState] = useState(false);
-  console.log('setPickerState', openPicker);
   return (
     <Box
       sx={{
