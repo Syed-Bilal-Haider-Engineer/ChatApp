@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import * as Yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup'; // Ensure this import is present
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup'; // Ensure this import is present
 import FormProvider from '../../components/hook-form/FormProvider';
-import { Alert, IconButton, InputAdornment, Stack } from '@mui/material';
-import { Eye, EyeSlash } from 'phosphor-react';
+import {
+  Alert,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  useTheme,
+} from '@mui/material';
+import {Eye, EyeSlash} from 'phosphor-react';
+import {Link} from 'react-router-dom';
 
 const LoginForm = () => {
+  const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
-  const loginSchema = Yup.object().shape({
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .required('Email is required')
+      .email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
-    email: Yup.string().required('Email is required').email('Enter a valid email address'),
   });
 
   const defaultValues = {
@@ -21,17 +32,23 @@ const LoginForm = () => {
   };
 
   const method = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(LoginSchema),
     defaultValues,
   });
 
-  const { reset, setError, handleSubmit, formState: { errors, isSubmitting, isSubmitSuccessful } } = method;
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    formState: {errors},
+  } = method;
 
   const onSubmit = async (data) => {
     try {
       // handle submit
       console.log(data); // Replace this with your submit logic
     } catch (error) {
+      console.log(errors.afterSubmit.message,'errors.afterSubmit.message')
       reset();
       setError('afterSubmit', {
         type: 'manual',
@@ -40,17 +57,13 @@ const LoginForm = () => {
     }
   };
 
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <FormProvider methods={method} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2}>
-        {!!errors.afterSubmit && <Alert severity='error'>{errors.afterSubmit.message}</Alert>}
-        
-        <RHFTextField name="email" label="Email" type="email" />
-        
+      <Stack spacing={3}>
+        {!!errors.afterSubmit && (
+          <Alert severity="error">{errors.afterSubmit.message}</Alert>
+        )}
+        <RHFTextField name="email" label="Email address" />
         <RHFTextField
           name="password"
           label="Password"
@@ -58,7 +71,10 @@ const LoginForm = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handlePasswordToggle}>
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
                   {showPassword ? <Eye /> : <EyeSlash />}
                 </IconButton>
               </InputAdornment>
@@ -66,6 +82,28 @@ const LoginForm = () => {
           }}
         />
       </Stack>
+      <Stack alignItems="flex-end" sx={{my: 2}}>
+        <Link variant="body2" color="inherit" underline="always">
+          Forget Password
+        </Link>
+      </Stack>
+     <Button
+        fullWidth
+        color="inherit"
+        size="large"
+        type="submit"
+        variant="contained"
+        sx={{
+          bgcolor: 'text.primary',
+          color: theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
+          '&:hover': {
+            bgcolor: 'text.primary',
+            color: theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
+          },
+        }}
+      >
+        Login
+      </Button>
     </FormProvider>
   );
 };
