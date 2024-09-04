@@ -6,8 +6,10 @@ import {faker} from '@faker-js/faker';
 import logo from '../../assets/Images/logo.ico';
 import {Nav_Buttons, Profile_Menu} from '../../data';
 import AntSwitch from '../../components/AntSwitch';
+import { useNavigate } from 'react-router-dom';
 
 const Siderbar = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = React.useState(0);
   const theme = useTheme();
   const {onToggleMode} = useSettings();
@@ -112,6 +114,7 @@ const Siderbar = () => {
               <IconButton
                 onClick={() => {
                   setSelected(3);
+                  navigate("/setting")
                 }}
                 sx={{
                   width: 'max-content',
