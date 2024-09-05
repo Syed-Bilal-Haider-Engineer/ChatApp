@@ -22,6 +22,10 @@ const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')))
 const Setting = Loadable(lazy(() => import('../pages/dashboard/Setting')));
 const Page404 = Loadable(lazy(() => import('../pages/Page404')));
 const Login = Loadable(lazy(() => import('../pages/auth/Login')));
+const Register = Loadable(lazy(() => import('../pages/auth/Register')));
+const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword')));
+const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
+const GroupChat = Loadable(lazy(() => import('../pages/dashboard/GroupChat')));
 
 export default function Router() {
   return useRoutes([
@@ -29,7 +33,10 @@ export default function Router() {
       path: '/auth',
       element: <MainLayout />,
       children: [
-        { element: <Login />, path: 'login' }
+        { element: <Login />, path: 'login' },
+        { element: <Register />, path: 'register' },
+        { element: <ResetPassword/>, path:'reset-password'},
+        { element: <NewPassword/>, path: 'new-password'},
       ]
     },
     {
@@ -39,6 +46,7 @@ export default function Router() {
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: 'app', element: <GeneralApp /> },
         { path: 'setting', element: <Setting /> },
+        { path: 'group-chat', element: <GroupChat/>},
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" replace /> }
       ]

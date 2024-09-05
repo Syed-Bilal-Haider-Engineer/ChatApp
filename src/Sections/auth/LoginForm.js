@@ -9,11 +9,12 @@ import {
   Button,
   IconButton,
   InputAdornment,
+  Link,
   Stack,
   useTheme,
 } from '@mui/material';
 import {Eye, EyeSlash} from 'phosphor-react';
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 
 const LoginForm = () => {
   const theme = useTheme();
@@ -83,7 +84,7 @@ const LoginForm = () => {
         />
       </Stack>
       <Stack alignItems="flex-end" sx={{my: 2}}>
-        <Link variant="body2" color="inherit" underline="always">
+        <Link to="/auth/reset-password"variant="body2" component={RouterLink} color="inherit" underline="always">
           Forget Password
         </Link>
       </Stack>

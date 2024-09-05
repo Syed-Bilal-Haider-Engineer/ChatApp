@@ -16,11 +16,11 @@ export default function RHFTextField({name, helpText, ...other}) {
       control={control}
       rules={{required: true}}
       render={({field, fieldState: {error}}) => (
-        <div>
+        <div style={{width:'100%'}}>
           <TextField
             {...field}
             fullWidth
-            value={field.value ?? ''}
+            value={typeof field.value === 'number' && field.value === 0 ? ''  :  field.value}
             error={!!error}
             helperText={error ? error.message : helpText}
             {...other}
