@@ -8,6 +8,6 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: 0,
     width: '100%',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   }));
 export default Search;

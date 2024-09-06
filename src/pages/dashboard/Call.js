@@ -1,15 +1,15 @@
 import { Box, Stack, useTheme, Typography, Link, Divider, IconButton } from '@mui/material';
 import React, { useState } from 'react';
-import { MagnifyingGlass, Plus } from 'phosphor-react';
+import { MagnifyingGlass, Phone } from 'phosphor-react';
 import { Search, SearchIconWrapper, StyledInputBased } from '../../components/Search/Index';
 // import { SimpleBarStyle } from './Scrollbar';
-import { ChatList } from '../../data';
-import ChatElement from '../../components/ChatElement';
-import CreateGroup from '../../Sections/main/CreateGroup';
+import {  ChatList } from '../../data';
+import CallElement from '../../components/CallElement';
+import StartCall from '../../Sections/main/StartCall';
 
-const GroupChat = () => {
+const Call = () => {
     const theme = useTheme();
-    const [openNewGroup, setNewGroup] = useState(false)
+    const [openNewCall, setNewCall] = useState(false)
     return (
         <>
             <Stack direction="row" sx={{ width: '100%' }}>
@@ -24,7 +24,7 @@ const GroupChat = () => {
                     }}
                 >
                     <Stack p={3} spacing={2} sx={{ flexShrink: 0 }}>
-                        <Typography variant="h4">Groups</Typography>
+                        <Typography variant="h4">Call Logs</Typography>
                         <Stack sx={{ width: '100%' }}>
                             <Search>
                                 <SearchIconWrapper>
@@ -55,12 +55,12 @@ const GroupChat = () => {
                             }}
                             component={Link}
                         >
-                            Create New Group
+                            Start a new Conversation
                         </Typography>
                         <IconButton onClick={() => {
-                            setNewGroup((prevGroup) => !prevGroup)
+                            setNewCall((prevGroup) => !prevGroup)
                         }}>
-                            <Plus />
+                            <Phone size={32} />
                         </IconButton>
                     </Stack>
                     <Divider />
@@ -75,29 +75,20 @@ const GroupChat = () => {
                     >
                         {/* <SimpleBarStyle> */}
                         <Stack direction="column" spacing={2} px={2}>
-                            <Typography variant='subtitle2' sx={{ color: 'black' }}>
-                                Pinned
-                            </Typography>
-                            {ChatList.filter((ele) => ele.pinned).map((item) => (
-                                <ChatElement key={item.id} {...item} />
-                            ))}
-                            <Typography variant='subtitle2' sx={{ color: '#676767' }}>
-                                All Groups
-                            </Typography>
-                            {ChatList.filter((ele) => !ele.pinned).map((item) => (
-                                <ChatElement key={item.id} {...item} />
+                            {ChatList.map((item) => (
+                                <CallElement key={item.id} {...item} />
                             ))}
                         </Stack>
                         {/* </SimpleBarStyle> */}
                     </Stack>
                 </Box>
             </Stack>
-            {openNewGroup && <CreateGroup
-                openNewGroup={openNewGroup}
-                handleClose={() => setNewGroup((preOpen) => !preOpen)}
-                onConfirm={() => setNewGroup((preOpen) => !preOpen)} />}
+            {openNewCall && <StartCall
+                openNewCall={openNewCall}
+                handleClose={() => setNewCall((preOpen) => !preOpen)}
+                onConfirm={() => setNewCall((preOpen) => !preOpen)} />}
         </>
     );
 }
 
-export default GroupChat;
+export default Call;
