@@ -48,5 +48,4 @@ This will start both the frontend and backend servers.
 ## Contributing
 
 If you encounter any issues or can contribute to the app, your help is much appreciated. Simply fork the repo, solve the issue, and create a pull request. I will update the README file based on future project updates.
-"""
 
