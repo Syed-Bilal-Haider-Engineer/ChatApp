@@ -14,16 +14,19 @@ const Profile_Menu = [
     id:1,
     title: "Profile",
     icon: <User />,
+    link:"/Profile"
   },
   {
     id:2,
     title: "Settings",
     icon: <Gear />,
+    link:"/setting"
   },
   {
     id:3,
-    title: "Profile",
+    title: "Logout",
     icon: <SignOut />,
+    link: "/logout"
   },
 ];
 
@@ -31,14 +34,17 @@ const Nav_Buttons = [
   {
     index: 0,
     icon: <ChatCircleDots />,
+    link:"/app"
   },
   {
     index: 1,
     icon: <Users />,
+    link:"Profile"
   },
   {
     index: 2,
     icon: <Phone />,
+    link:"/Call"
   },
 ];
 
@@ -46,6 +52,7 @@ const Nav_Setting = [
   {
     index: 3,
     icon: <GearSix />,
+     link:"/setting"
   },
 ];
 

@@ -14,8 +14,12 @@ const Siderbar = () => {
   const {onToggleMode} = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event,link) => {
     setAnchorEl(event.currentTarget);
+    if(link){
+      navigate(link)
+      handleClose()
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -78,6 +82,7 @@ const Siderbar = () => {
                 <IconButton
                   onClick={() => {
                     setSelected(element.index);
+                    navigate(element.link)
                   }}
                   sx={{
                     width: 'max-content',
@@ -113,7 +118,7 @@ const Siderbar = () => {
               <IconButton
                 onClick={() => {
                   setSelected(3);
-                  navigate("/setting")
+                  navigate('/setting')
                 }}
                 sx={{
                   width: 'max-content',
@@ -164,7 +169,9 @@ const Siderbar = () => {
             <Stack spacing={2} px={1}>
               {Profile_Menu.map((ele) => {
                 return (
-                  <MenuItem onClick={handleClick} key={ele.id}>
+                  <MenuItem onClick={(e)=> {
+                    handleClick(e,ele.link)
+                  }} key={ele.id}>
                     <Stack
                       sx={{width: '100%'}}
                       direction="row"
@@ -172,7 +179,7 @@ const Siderbar = () => {
                       justifyContent="space-between"
                     >
                       <span>{ele.title}</span>
-                      {ele.icon}
+                      <span> {ele.icon}</span>
                     </Stack>
                   </MenuItem>
                 );
