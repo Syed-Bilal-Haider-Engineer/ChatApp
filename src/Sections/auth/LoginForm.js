@@ -39,10 +39,21 @@ const LoginForm = () => {
 
   const {
     reset,
+    watch,
+    trigger,
     setError,
     handleSubmit,
     formState: {errors},
   } = method;
+
+  useEffect(()=>{
+    if (watch('email')) {
+      trigger('email')
+    }
+    if (watch('password')) {
+      trigger('password')
+    }
+  },[watch('email'),watch('password')])
 
   const onSubmit = async (data) => {
     try {
