@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import * as Yup from 'yup';
 import {useForm} from 'react-hook-form';
@@ -39,10 +39,21 @@ const LoginForm = () => {
 
   const {
     reset,
+    watch,
+    trigger,
     setError,
     handleSubmit,
     formState: {errors},
   } = method;
+
+  useEffect(()=>{
+    if (watch('email')) {
+      trigger('email')
+    }
+    if (watch('password')) {
+      trigger('password')
+    }
+  },[watch('email'),watch('password')])
 
   const onSubmit = async (data) => {
     try {
