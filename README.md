@@ -21,8 +21,9 @@ To contribute, please fork the repository.
 
 After forking, clone the repository to your local machine:
 
-\`\`\`bash
+\`\`\`
 https://github.com/Syed-Bilal-Haider-Engineer/ChatApp.git
+
 cd chatapp
 \`\`\`
 
