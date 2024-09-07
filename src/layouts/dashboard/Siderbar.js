@@ -46,7 +46,7 @@ const Siderbar = () => {
               mt: 2,
             }}
           >
-            <Cat size={100} color="green" />
+            <Cat size={64} color="white" />
           </Box>
           <Stack
             sx={{width: 'max-content'}}
