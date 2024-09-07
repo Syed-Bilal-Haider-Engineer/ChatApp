@@ -1,9 +1,8 @@
 import {Avatar, Box, Divider, IconButton, Menu, MenuItem, Stack, useTheme} from '@mui/material';
-import {Gear} from 'phosphor-react';
+import {Cat, Gear} from 'phosphor-react';
 import React from 'react';
 import useSettings from '../../hooks/useSettings';
 import {faker} from '@faker-js/faker';
-import logo from '../../assets/Images/logo.ico';
 import {Nav_Buttons, Profile_Menu} from '../../data';
 import AntSwitch from '../../components/AntSwitch';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +46,7 @@ const Siderbar = () => {
               mt: 2,
             }}
           >
-            <img src={logo} alt="chatApp logo" />
+            <Cat size={100} color="green" />
           </Box>
           <Stack
             sx={{width: 'max-content'}}
