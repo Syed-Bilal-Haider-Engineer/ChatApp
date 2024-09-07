@@ -27,6 +27,8 @@ const ResetPassword = Loadable(lazy(() => import('../pages/auth/ResetPassword'))
 const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 const GroupChat = Loadable(lazy(() => import('../pages/dashboard/GroupChat')));
 const Call = Loadable(lazy(() => import('../pages/dashboard/Call')));
+const Profile = Loadable(lazy(()=> import('../pages/dashboard/Profile')));
+
 export default function Router() {
   return useRoutes([
     {
@@ -49,7 +51,8 @@ export default function Router() {
         { path: 'group-chat', element: <GroupChat/>},
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" replace /> },
-        { path: 'Call', element: <Call />}
+        { path: 'Call', element: <Call />},
+        { path: 'Profile', element: <Profile/>}
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> }
