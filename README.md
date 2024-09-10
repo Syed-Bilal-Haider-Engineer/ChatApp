@@ -3,8 +3,8 @@
 
 ## Tech Stack
 
-**Frontend:** React v18, MUI v5, Redux  
-**Backend:** Node.js, Express  
+**Frontend:** React, MUI v5, Redux  
+**Backend:** Node.js, Express, MongoDB
 **Real-time Communication:** Socket.io
 
 ## Project Overview
