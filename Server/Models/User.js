@@ -43,5 +43,4 @@ userSchema.methods.correctPassword = async function (canditatePassword,userPassw
  return await bcrypt.compare(canditatePassword,userPassword)
 }
 
-
 export default mongoose.model("User", userSchema);
