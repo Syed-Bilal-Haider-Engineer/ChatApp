@@ -3,7 +3,7 @@
 
 ## Tech Stack
 
-**Frontend:** React, MUI v5, Redux  
+**Frontend:** React, MUI v5, Redux, React Hooks
 
 **Backend:** Node.js, Express, MongoDB
 
