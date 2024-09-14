@@ -5,27 +5,27 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-  "start": "nodemon ./server.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-  "bcrypt": "^5.1.1",
-  "cors": "^2.8.5",
-  "dotenv": "^16.4.5",
-  "express": "^4.19.2",
-  "express-mongo-sanitize": "^2.2.0",
-  "express-rate-limit": "^7.4.0",
-  "helmet": "^7.1.0",
-  "jsonwebtoken": "^9.0.2",
-  "mongoos": "^0.0.1-security",
-  "mongoose": "^8.6.1",
-  "morgan": "^1.10.0",
-  "xss": "^1.0.15"
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoos": "^0.0.1-security",
+    "mongoose": "^8.6.1",
+    "morgan": "^1.10.0",
+    "otp-generator": "^4.0.1",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
-  "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4"
   }
- }
-  
+}
