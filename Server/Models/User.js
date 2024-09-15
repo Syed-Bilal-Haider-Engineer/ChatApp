@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import crypto from 'node:crypto';
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -32,7 +33,7 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt: {
       type: Date,
     },
-    passResetToken: {
+    passwordResetToken: {
       type: String,
     },
     passwordResetExpiresAt: {
@@ -58,19 +59,52 @@ userSchema.methods.correctPassword = async function (
   return await bcrypt.compare(canditatePassword, userPassword);
 };
 
-userSchema.methods.correctOtp = async function (
-    canditateOtp,
-    userOtp
-  ) {
-    return await bcrypt.compare(canditateOtp, userOtp);
-  };
+userSchema.methods.correctOtp = async function (canditateOtp, userOtp) {
+  return await bcrypt.compare(canditateOtp, userOtp);
+};
 
 userSchema.pre('validate', async function () {
   if (!this.isModified()) {
     return next();
   }
   this.opt = await bcrypt.hash(this.opt, 12);
-  next()
+  next();
+});
+
+userSchema.methods.createPasswordResetToken = async function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetExpiresAt = Date.now()*10*60*1000;
+  return passwordResetToken;
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
+  if (this.passwordChangedAt) {
+    const changedTimeStamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return JWTTimeStamp < changedTimeStamp;
+  }
+
+  // FALSE MEANS NOT CHANGED
+  return false;
+};
+
+userSchema.pre("save", async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified("password") || !this.password) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+
+  //! Shift it to next hook // this.passwordChangedAt = Date.now() - 1000;
+
+  next();
 });
 
 export default mongoose.model('User', userSchema);
