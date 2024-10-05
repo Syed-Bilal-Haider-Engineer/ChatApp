@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
+import router from './routers';
 // import xss from 'xss';
 
 const app = express();
@@ -31,5 +32,6 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
+app.use(router)
 
 export { app };
