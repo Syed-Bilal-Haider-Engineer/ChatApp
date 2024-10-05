@@ -1,9 +1,12 @@
-import User from '../Models/User';
-import filterObj from '../Utils/filterObj';
+import User from '../Models/User.js';
+import sendEmail from '../Services/mailer.js';
+import filterObj from '../Utils/filterObj.js';
 import bcrypt from 'bcryptjs';
 import otpGenerator from 'otp-generator';
+import jwt from 'jsonwebtoken'; // Assuming you use JWT for token generation
 
-export const Register = (req, res, next) => {
+// Register user
+export const Register = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
   if (!firstName || !lastName || !email || !password) {
@@ -15,39 +18,35 @@ export const Register = (req, res, next) => {
 
   const filteredBody = filterObj(req.body, 'firstName', 'lastName', 'email', 'password');
 
-  User.findOne({ email })
-    .then((existingUser) => {
-      if (existingUser && existingUser.verified) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Email already in use, please login.',
-        });
-      } else if (existingUser) {
-        return User.findOneAndUpdate(
-          { email },
-          filteredBody,
-          { new: true, validateModifiedOnly: true }
-        ).then((updatedUser) => {
-          req.userId = updatedUser._id;
-          next();
-        });
-      } else {
-        return bcrypt.hash(password, 12).then((hashedPassword) => {
-          const newUser = {
-            ...filteredBody,
-            password: hashedPassword,
-          };
+  try {
+    const existingUser = await User.findOne({ email });
 
-          return User.create(newUser).then((createdUser) => {
-            req.userId = createdUser._id;
-            next();
-          });
-        });
-      }
-    })
-    .catch((error) => {
-      next(error); 
-    });
+    if (existingUser && existingUser.verified) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Email already in use, please login.',
+      });
+    }
+
+    let user;
+    if (existingUser) {
+      user = await User.findOneAndUpdate({ email }, filteredBody, {
+        new: true,
+        validateModifiedOnly: true,
+      });
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 12);
+      user = await User.create({
+        ...filteredBody,
+        password: hashedPassword,
+      });
+    }
+
+    req.userId = user._id;
+    next(); 
+  } catch (error) {
+    next(error);
+  }
 };
 
 // Send OTP
@@ -60,7 +59,7 @@ export const sendOtp = async (req, res, next) => {
     lowerCaseAlphabets: false,
   });
 
-  const otpExpiryTime = Date.now() + 10 * 60 * 1000; 
+  const otpExpiryTime = Date.now() + 10 * 60 * 1000; // 10 minutes
 
   try {
     await User.findByIdAndUpdate(userId, {
@@ -68,12 +67,21 @@ export const sendOtp = async (req, res, next) => {
       otp_expiry_time: otpExpiryTime,
     });
 
+    const message = {
+      from: 'bilaldev151214@gmail.com',
+      to: 'example@gmail.com', // Replace with the user's email
+      subject: 'OTP for Twak',
+      text: `Your OTP is ${newOtp}. This is valid for 10 minutes.`,
+    };
+
+    await sendEmail(message);
+
     res.status(200).json({
       status: 'success',
       message: 'OTP sent successfully!',
     });
   } catch (error) {
-    next(error); 
+    next(error);
   }
 };
 
@@ -84,7 +92,7 @@ export const verifiedOtp = async (req, res, next) => {
   try {
     const user = await User.findOne({
       email,
-      otp_expiry_time: { $gt: Date.now() }, 
+      otp_expiry_time: { $gt: Date.now() },
     });
 
     if (!user) {
@@ -94,20 +102,21 @@ export const verifiedOtp = async (req, res, next) => {
       });
     }
 
-    const isOtpCorrect = await User.correctOtp(otp, user.otp); 
-    if (!isOtpCorrect) {
+    if (otp !== user.otp) {
       return res.status(400).json({
         status: 'error',
         message: 'OTP is not valid!',
       });
     }
 
-    user.otp = undefined; 
+    user.otp = undefined;
     user.verified = true;
 
-    await user.save({ new: true, validateModifiedOnly: true });
+    await user.save({ validateModifiedOnly: true });
 
-    const token = signToken(user._id); 
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
 
     res.status(200).json({
       status: 'success',
@@ -115,6 +124,6 @@ export const verifiedOtp = async (req, res, next) => {
       token,
     });
   } catch (error) {
-    next(error); 
+    next(error);
   }
 };

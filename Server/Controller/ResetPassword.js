@@ -1,5 +1,5 @@
-import User from "../Models/User";
-import { signToken } from "./login";
+import User from "../Models/User.js";
+import { signToken } from "./login.js";
 
 export const resetPassword = (async (req, res, next) => {
     // 1) Get user based on the token

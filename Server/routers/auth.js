@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { login } from "../Controller/login";
-import { Register, sendOtp, verifiedOtp } from "../Controller/Register";
-import { resetPassword } from "../Controller/ResetPassword";
-import { ForgetPassword } from "../Controller/ForgetPassword";
+import { login } from "../Controller/login.js";
+import { Register, sendOtp, verifiedOtp } from "../Controller/Register.js";
+import { resetPassword } from "../Controller/ResetPassword.js";
+import { ForgetPassword } from "../Controller/ForgetPassword.js";
 
 const router = Router();
 

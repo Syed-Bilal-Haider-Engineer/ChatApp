@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
-import User from '../Models/User';
+import User from '../Models/User.js';
 
 export const protect = async (req, res, next) => {
   try {

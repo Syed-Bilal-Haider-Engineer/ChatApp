@@ -1,5 +1,5 @@
 import JWT from 'jsonwebtoken';
-import User from '../Models/User';
+import User from '../Models/User.js';
 
 export const signToken = (userId) => {
  return JWT.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });

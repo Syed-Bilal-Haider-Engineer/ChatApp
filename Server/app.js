@@ -4,7 +4,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import cors from 'cors';
-import router from './routers';
+import router from './routers/index.js'
 // import xss from 'xss';
 
 const app = express();

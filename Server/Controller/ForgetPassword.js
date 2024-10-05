@@ -1,7 +1,4 @@
-import User from '../Models/User';
-
-import User from '../Models/User';
-
+import User from '../Models/User.js';
 export const ForgetPassword = async (req, res, next) => {
   try {
     // Find user by email

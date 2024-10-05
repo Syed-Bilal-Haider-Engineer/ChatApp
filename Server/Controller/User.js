@@ -1,8 +1,7 @@
-import User from "../Models/User";
-import filterObj from "../Utils/filterObj";
-import { catchAsync } from "../Utils/catchAsync";  // Assuming catchAsync is imported from some utility
+import User from "../Models/User.js";
+import filterObj from "../Utils/filterObj.js";
 
-export const updateMe = catchAsync(async (req, res, next) => {
+export const updateMe = async (req, res, next) => {
   const filteredBody = filterObj(req.body, "firstName", "lastName", "about", "avatar");
 
   const userDoc = await User.findByIdAndUpdate(req.user._id, filteredBody);
@@ -12,4 +11,4 @@ export const updateMe = catchAsync(async (req, res, next) => {
     data: userDoc,
     message: "User Updated successfully",
   });
-});
+};
