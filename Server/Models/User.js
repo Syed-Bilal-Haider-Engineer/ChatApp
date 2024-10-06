@@ -63,13 +63,14 @@ userSchema.methods.correctOtp = async function (canditateOtp, userOtp) {
   return await bcrypt.compare(canditateOtp, userOtp);
 };
 
-userSchema.pre('validate', async function () {
-  if (!this.isModified()) {
+userSchema.pre('validate', async function (next) {
+  if (!this.isModified('otp') || !this.otp) {
     return next();
   }
-  this.opt = await bcrypt.hash(this.opt, 12);
+  this.otp = await bcrypt.hash(this.otp.toString(), 12);
   next();
 });
+
 
 userSchema.methods.createPasswordResetToken = async function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
@@ -103,7 +104,6 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
 
   //! Shift it to next hook // this.passwordChangedAt = Date.now() - 1000;
-
   next();
 });
 

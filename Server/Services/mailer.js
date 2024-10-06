@@ -1,27 +1,29 @@
-import sgMail from "@sendgrid/mail";
-sgMail.setApiKey(process.env.SG_KEY);
+import sendgrid from "@sendgrid/mail"
 
-const sendSGMail = async ({ to, sender, subject, html, attachments }) => {
+sendgrid.setApiKey(process.env.SG_KEY);
+
+const sendSGMail = async(to, from, subject, text) => {
   try {
+    const from = "jmm.bilalhaider151214@gmail.com"; // Make sure this email is verified in SendGrid
     const msg = {
-      to, // Recipient
-      from: sender || "bilaldev151214@gmail.com", // Fallback to default verified sender if not provided
-      subject,
-      html,
-      attachments,
+      to: to, // Recipient email
+      from: from, // Verified sender email
+      subject: subject || "This is testing email!",
     };
-
-    await sgMail.send(msg);
+    // Send the email
+    const response = await sendgrid.send(msg);
+    return response;
   } catch (error) {
-    console.error("Error sending email:", error.response?.body || error.message);
+    console.error("Error sending email:", error.response ? error.response.body : error);
   }
 };
 
- const sendEmail = async (args) => {
+const sendEmail = async (args) => {
   if (process.env.NODE_ENV !== "development") {
     return sendSGMail(args);
+  } else {
+    return Promise.resolve();
   }
-  return Promise.resolve();
 };
 
 export default sendEmail;

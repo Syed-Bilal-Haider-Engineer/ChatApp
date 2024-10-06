@@ -8,7 +8,6 @@ import jwt from 'jsonwebtoken'; // Assuming you use JWT for token generation
 // Register user
 export const Register = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
-
   if (!firstName || !lastName || !email || !password) {
     return res.status(400).json({
       status: 'error',
@@ -67,14 +66,7 @@ export const sendOtp = async (req, res, next) => {
       otp_expiry_time: otpExpiryTime,
     });
 
-    const message = {
-      from: 'bilaldev151214@gmail.com',
-      to: 'example@gmail.com', // Replace with the user's email
-      subject: 'OTP for Twak',
-      text: `Your OTP is ${newOtp}. This is valid for 10 minutes.`,
-    };
-
-    await sendEmail(message);
+    sendEmail('bilalshahbscs@gmail.com', '', 'Hello world!', 'This is a test email.');
 
     res.status(200).json({
       status: 'success',

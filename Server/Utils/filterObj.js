@@ -5,6 +5,7 @@ const filterObj = (obj, ...allowedFiled) => {
         return newObj[ele] = obj[ele]
     }
   });
+  return newObj;
 };
 
 export default filterObj;
