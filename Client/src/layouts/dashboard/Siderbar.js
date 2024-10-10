@@ -6,9 +6,12 @@ import {faker} from '@faker-js/faker';
 import {Nav_Buttons, Profile_Menu} from '../../data';
 import AntSwitch from '../../components/AntSwitch';
 import { useNavigate } from 'react-router-dom';
+import { LogoutUser } from '../../redux/slices/auth';
+import { useDispatch } from 'react-redux';
 
 const Siderbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [selected, setSelected] = React.useState(0);
   const theme = useTheme();
   const {onToggleMode} = useSettings();
@@ -167,12 +170,21 @@ const Siderbar = () => {
             }}
           >
             <Stack spacing={2} px={1}>
-              {Profile_Menu.map((ele) => {
+              {Profile_Menu.map((ele,i) => {
                 return (
                   <MenuItem onClick={(e)=> {
                     handleClick(e,ele.link)
                   }} key={ele.id}>
                     <Stack
+                     onClick={() => {
+                      if(i===2){
+                        dispatch(LogoutUser())
+                      } else if(i===1){
+                        navigate('/setting')
+                      }else if(i===0){
+                        navigate('/Profile')
+                      }
+                     }}
                       sx={{width: '100%'}}
                       direction="row"
                       alignItems="center"

@@ -10,9 +10,12 @@ import {
     Stack,
     useTheme,
 } from '@mui/material';
+import { ForgotPassword } from '../../redux/slices/auth';
+import { useDispatch } from 'react-redux';
 
 const ResetPasswordForm = () => {
     const theme = useTheme();
+    const dispatch = useDispatch()
     const ResetPasswordFormSchema = Yup.object().shape({
         email: Yup.string()
             .required('Email is required')
@@ -39,6 +42,7 @@ const ResetPasswordForm = () => {
         try {
             // handle submit
             console.log(data); // Replace this with your submit logic
+            dispatch(ForgotPassword(data));
         } catch (error) {
             console.log(errors.afterSubmit.message, 'errors.afterSubmit.message')
             reset();

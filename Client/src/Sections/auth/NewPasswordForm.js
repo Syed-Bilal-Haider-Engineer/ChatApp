@@ -13,8 +13,13 @@ import {
     useTheme,
 } from '@mui/material';
 import { Eye, EyeSlash } from 'phosphor-react';
+import {NewPassword} from '../../redux/slices/auth.js'
+import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
-const NewPassword = () => {
+const SetNewPassword = () => {
+    const dispatch = useDispatch()
+    const [queryParameters] = useSearchParams();
     const [showPassword, setShowPassword] = useState(false)
     const [confirmPassword,setConfirmPassword] = useState(false)
     const theme = useTheme();
@@ -43,7 +48,8 @@ const NewPassword = () => {
     const onSubmit = async (data) => {
         try {
             // handle submit
-            console.log(data); // Replace this with your submit logic
+            console.log(data);
+            dispatch(NewPassword({...data, token: queryParameters.get('token')})); // Replace this with your submit logic
         } catch (error) {
             console.log(errors.afterSubmit.message, 'errors.afterSubmit.message')
             reset();
@@ -116,4 +122,4 @@ const NewPassword = () => {
     );
 };
 
-export default NewPassword;
+export default SetNewPassword;
