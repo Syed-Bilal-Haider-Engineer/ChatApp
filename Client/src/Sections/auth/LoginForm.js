@@ -15,8 +15,11 @@ import {
 } from '@mui/material';
 import {Eye, EyeSlash} from 'phosphor-react';
 import {Link as RouterLink} from 'react-router-dom';
+import { LoginUser } from '../../redux/slices/auth';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
+  const dispatch = useDispatch()
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,6 +50,7 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       // handle submit
+      dispatch(LoginUser(data))
       console.log(data); // Replace this with your submit logic
     } catch (error) {
       console.log(errors.afterSubmit.message,'errors.afterSubmit.message')

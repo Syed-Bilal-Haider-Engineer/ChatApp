@@ -1,12 +1,13 @@
 import { Container, Stack } from "@mui/material";
 import { Cat } from "phosphor-react";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const isAuthenticated = true;
 const MainLayout = () => {
-  
-  if(isAuthenticated){
+  const {isLoggedIn} = useSelector((state) => state.auth)
+  if(isLoggedIn){
     return <Navigate to="/app"/>
   }
   return (

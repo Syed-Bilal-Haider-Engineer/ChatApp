@@ -24,13 +24,13 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const updateSidebarToggle = () => {
-  return async () => {
+  return async (dispatch,getState) => {
     dispatch(slice.actions.toggleSidebar());
   };
 };
 
 export const updateSidebarType = (type) => {
-  return async () => {
+  return async (dispatch, getState) => {
     dispatch(
       slice.actions.updateType({
         type,
