@@ -8,8 +8,7 @@ process.on("uncaughtException",()=>{
  process.exit(1);
 })
 
-const DB = process.env.DB_URL.replace("<db_password>", process.env.PASSWORD)
-connectDB(DB)
+connectDB(process.env.DB_URL)
 app.listen(port, () => {
  console.log(`Server is running on port ${port}`);
 });
