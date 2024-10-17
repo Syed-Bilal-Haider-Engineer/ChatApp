@@ -1,7 +1,10 @@
 # ChatApp
 
 A real-time chat application with various features, including one-to-one chat, group chat, audio/video calling, and more. The app is fully responsive with light/dark mode options and multiple color presets, making it highly customizable.
+
+
 ![alt text](./Client//src//assets//image.png)
+
 ## Features
 
 - **One-to-One Chat**: Private messaging between two users.
