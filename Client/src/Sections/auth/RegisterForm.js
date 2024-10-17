@@ -7,8 +7,11 @@ import FormProvider from '../../components/hook-form/FormProvider';
 import { Alert, Button, IconButton, InputAdornment, Stack, useTheme } from '@mui/material';
 import { Eye, EyeSlash } from 'phosphor-react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { RegisterUser } from '../../redux/slices/auth';
 
 const RegisterForm = () => {
+    const dispatch = useDispatch();
     const theme = useTheme();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -38,7 +41,7 @@ const RegisterForm = () => {
     const onSubmit = async (data) => {
         try {
             // handle submit
-            console.log(data); // Replace this with your submit logic
+            dispatch(RegisterUser(data)); // Replace this with your submit logic
         } catch (error) {
             console.error('Submission error:', error.message);
             reset();

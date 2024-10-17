@@ -28,7 +28,7 @@ const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
 const GroupChat = Loadable(lazy(() => import('../pages/dashboard/GroupChat')));
 const Call = Loadable(lazy(() => import('../pages/dashboard/Call')));
 const Profile = Loadable(lazy(()=> import('../pages/dashboard/Profile')));
-
+const VerifyPage = Loadable(lazy(() => import("../pages/auth/Verify.js")));
 export default function Router() {
   return useRoutes([
     {
@@ -39,6 +39,7 @@ export default function Router() {
         { element: <Register />, path: 'register' },
         { element: <ResetPassword/>, path:'reset-password'},
         { element: <NewPassword/>, path: 'new-password'},
+        {element: <VerifyPage/>, path:'verify'}
       ]
     },
     {
