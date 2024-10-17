@@ -34,4 +34,4 @@ A real-time chat application with various features, including one-to-one chat, g
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/chatapp.git
+ https://github.com/Syed-Bilal-Haider-Engineer/ChatApp.git
