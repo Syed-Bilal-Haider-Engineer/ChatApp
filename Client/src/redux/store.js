@@ -6,7 +6,7 @@ import {
 import {persistStore, persistReducer} from 'redux-persist';
 import { rootPersistConfig, rootReducer } from './RootReducer';
 const store = configureStore({
-  reducer: persistReducer(rootPersistConfig,rootReducer),
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       serializableCheck: false,
@@ -15,8 +15,8 @@ const store = configureStore({
   },
 });
 
-const persist = persistStore(store);
+// const persist = persistStore(store);
 const {dispatch} = store;
 const useSelector = useAppSelector;
 const useDispatch = () => useAppDispatch();
-export {store, persist, useSelector, dispatch, useDispatch};
+export {store, useSelector, dispatch, useDispatch};

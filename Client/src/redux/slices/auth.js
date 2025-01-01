@@ -4,7 +4,6 @@ import axios from "../../utils/axios";
 import { showSnackbar } from "./app";
 
 // ----------------------------------------------------------------------
-
 const initialState = {
   isLoggedIn: false,
   token: "",
@@ -127,7 +126,7 @@ export function LoginUser(formValues) {
 
     await axios
       .post(
-        "/auth/login",
+        "http://localhost:8000/auth/login",
         {
           ...formValues,
         },
@@ -155,7 +154,7 @@ export function LoginUser(formValues) {
         );
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error,"error");
         dispatch(showSnackbar({ severity: "error", message: error.message }));
         dispatch(
           slice.actions.updateIsLoading({ isLoading: false, error: true })
@@ -174,46 +173,24 @@ export function LogoutUser() {
 export function RegisterUser(formValues) {
   return async (dispatch, getState) => {
     dispatch(slice.actions.updateIsLoading({ isLoading: true, error: false }));
-
-    await axios
-      .post(
-        "/auth/register",
-        {
-          ...formValues,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response);
-        dispatch(
-          slice.actions.updateRegisterEmail({ email: formValues.email })
-        );
-
-        dispatch(
-          showSnackbar({ severity: "success", message: response.data.message })
-        );
-        dispatch(
-          slice.actions.updateIsLoading({ isLoading: false, error: false })
-        );
+    // perform the registration process (e.g., sending a POST request)
+    await axios.post("http://localhost:8000/auth/register", {...formValues})
+      .then(response => {
+        dispatch(slice.actions.updateRegisterEmail({ email: formValues.email }));
+        dispatch(showSnackbar({ severity: "success", message: response.data.message }));
+        dispatch(slice.actions.updateIsLoading({ isLoading: false, error: false }));
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(error => {
         dispatch(showSnackbar({ severity: "error", message: error.message }));
-        dispatch(
-          slice.actions.updateIsLoading({ error: true, isLoading: false })
-        );
-      })
-      .finally(() => {
+        dispatch(slice.actions.updateIsLoading({ error: true, isLoading: false }));
+      }).finally(()=>{
         if (!getState().auth.error) {
           window.location.href = "/auth/verify";
         }
       });
   };
 }
+
 
 export function VerifyEmail(formValues) {
   return async (dispatch, getState) => {

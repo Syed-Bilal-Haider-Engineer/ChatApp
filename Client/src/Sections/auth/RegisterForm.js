@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -36,11 +36,14 @@ const RegisterForm = () => {
         defaultValues,
     });
 
-    const { reset, setError, handleSubmit, formState: { errors } } = methods;
+  
+
+    const { reset, setError, watch ,trigger, handleSubmit, formState: { errors } } = methods;
 
     const onSubmit = async (data) => {
         try {
             // handle submit
+            console.log("data===>",data)
             dispatch(RegisterUser(data)); // Replace this with your submit logic
         } catch (error) {
             console.error('Submission error:', error.message);
@@ -51,7 +54,16 @@ const RegisterForm = () => {
             });
         }
     };
+    useEffect(() => {
+        const subscription = watch(({ name }) => {
+        if (name) {
+           trigger(name);
+          }
+        });
 
+        return () => subscription.unsubscribe();
+
+        }, [watch,trigger]);
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3}>
@@ -67,7 +79,7 @@ const RegisterForm = () => {
                     <RHFTextField name="firstName" label="First name" fullWidth/>
                     <RHFTextField name="lastName" label="Last name" fullWidth />
                 </Stack>
-                <RHFTextField name="email" label="Email address" />
+                <RHFTextField name="email" label="Email address" type="email" />
                 <RHFTextField
                     name="password"
                     label="Password"

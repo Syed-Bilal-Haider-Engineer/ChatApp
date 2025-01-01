@@ -23,7 +23,7 @@ const slice = createSlice({
       state.sidebar.type = actions.payload.type;
     },
     openSnackBar(state, action) {
-      console.log(action.payload);
+      console.log(action.payload,"payload");
       state.snackbar.open = true;
       state.snackbar.severity = action.payload.severity;
       state.snackbar.message = action.payload.message;
@@ -61,6 +61,7 @@ export const closeSnackBar = () => async (dispatch, getState) => {
 export const showSnackbar =
   ({ severity, message }) =>
   async (dispatch, getState) => {
+    console.log("show snackbar==>", severity, message);
     dispatch(
       slice.actions.openSnackBar({
         message,
@@ -68,7 +69,7 @@ export const showSnackbar =
       })
     );
 
-    setTimeout(() => {
-      dispatch(slice.actions.closeSnackBar());
-    }, 4000);
+    // setTimeout(() => {
+    //   dispatch(slice.actions.closeSnackBar());
+    // }, 4000);
   };

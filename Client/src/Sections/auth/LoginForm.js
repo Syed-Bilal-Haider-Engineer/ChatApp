@@ -68,7 +68,7 @@ const LoginForm = () => {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
-        <RHFTextField name="email" label="Email address" />
+        <RHFTextField name="email" type="email" label="Email address" />
         <RHFTextField
           name="password"
           label="Password"
