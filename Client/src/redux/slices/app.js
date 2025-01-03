@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
   sidebar: {
@@ -10,6 +11,9 @@ const initialState = {
     severity: null,
     message: null,
   },
+  users: [],
+  friends: [],
+  friendRequest: []
 };
 
 const slice = createSlice({
@@ -33,6 +37,15 @@ const slice = createSlice({
       state.snackbar.open = false;
       state.snackbar.message = null;
     },
+    updateUsers(state,actions){
+      state.users = actions.payload;
+    },
+    updateFriends(state,actions){
+      state.friends = actions.payload;
+    },
+    updateFriendRequest(state,actions){
+      state.friendRequest = actions.payload;
+    }
   },
 });
 
@@ -69,7 +82,57 @@ export const showSnackbar =
       })
     );
 
-    // setTimeout(() => {
-    //   dispatch(slice.actions.closeSnackBar());
-    // }, 4000);
+    setTimeout(() => {
+      dispatch(slice.actions.closeSnackBar());
+    }, 4000);
   };
+
+  export const fetchUsers = () => {
+     return async(dispatch, getState) => {
+         await axios("http://localhost:8000/get-users",{
+           headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${getState().auth.token}`
+           }
+        }).then((response)=>{
+            console.log(response,'response')
+            dispatch(slice.actions.updateUsers({users: response.data.data}))
+        }).catch((error) => {
+            console.log(error);
+        })
+     }
+  }
+
+  
+  export const fetchFriend = () => {
+    return async(dispatch, getState) => {
+        await axios("http://localhost:8000/get-friends",{
+          headers:{
+           "Content-Type":"application/json",
+           Authorization: `Bearer ${getState().auth.token}`
+          }
+       }).then((response)=>{
+           console.log(response,'response')
+           dispatch(slice.actions.updateFriends({users: response.data.data}))
+       }).catch((error) => {
+           console.log(error);
+       })
+    }
+ }
+
+ 
+ export const fetchFriendRequest = () => {
+  return async(dispatch, getState) => {
+      await axios("http://localhost:8000/get-request",{
+        headers:{
+         "Content-Type":"application/json",
+         Authorization: `Bearer ${getState().auth.token}`
+        }
+     }).then((response)=>{
+         console.log(response,'response')
+         dispatch(slice.actions.updateFriendRequest({users: response.data.data}))
+     }).catch((error) => {
+         console.log(error);
+     })
+  }
+}

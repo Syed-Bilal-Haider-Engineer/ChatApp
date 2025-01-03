@@ -28,3 +28,17 @@ export const getUser = async (req,res,next) => {
     message: "Users found successfully!"
   })
 }
+
+export const getRequest = async(req,res,next) => {
+  const request = User.find({
+    FriendRequest: req.user.id
+  }).populate("sender","_id firstName lastName")
+}
+
+export const getFriends = async(req,res,next) => {
+  const friends = User.findById(req.user._id).populate("friends","_id firstName lastName")
+  res.status(200).json({
+    status:"success",
+    data: friends
+  })
+}

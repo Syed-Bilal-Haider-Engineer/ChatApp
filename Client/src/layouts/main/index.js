@@ -6,9 +6,9 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   const {isLoggedIn} = useSelector((state) => state.auth)
-  if(isLoggedIn){
-    return <Navigate to="/app"/>
-  }
+  // if(isLoggedIn){
+  //   return <Navigate to="/app"/>
+  // }
   return (
     <>
     <Container sx={{mt:5}} maxWidth="sm">

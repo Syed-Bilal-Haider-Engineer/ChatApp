@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -8,14 +8,24 @@ import {
   Stack
 } from '@mui/material';
 import { IconButton } from '@mui/material';
-import { ArchiveBox, CircleDashed, MagnifyingGlass } from 'phosphor-react';
+import { ArchiveBox, CircleDashed, MagnifyingGlass, Users } from 'phosphor-react';
 import { ChatList } from '../../data';
 // import 'simplebar-react/dist/simplebar.min.css';
 import { Search, SearchIconWrapper, StyledInputBased } from '../../components/Search/Index';
 import ChatElement from '../../components/ChatElement';
+import Friends from '../../Sections/main/Friends';
 
 const Chats = () => {
   const theme = useTheme()
+  const [openDialog, setOpenDialog] = useState();
+
+  const hanldeOpenDialog = () => {
+    setOpenDialog(true)
+  }
+
+  const hanldeCloseDialog = () => {
+    setOpenDialog(false)
+  }
   return (
     <>
       <Box
@@ -36,9 +46,16 @@ const Chats = () => {
             alignItems="center"
           >
             <Typography variant="h5">Chats</Typography>
-            <IconButton>
-              <CircleDashed />
-            </IconButton>
+             <Stack direction="row" alignItems="center" spacing={1}>
+              <IconButton onClick={()=>{
+                 hanldeOpenDialog()
+              }}>
+                <CircleDashed />
+              </IconButton>
+              <IconButton>
+                <Users />
+              </IconButton>
+             </Stack>
           </Stack>
           <Stack sx={{ width: '100%' }}>
             <Search>
@@ -48,7 +65,7 @@ const Chats = () => {
               <StyledInputBased
                 placeholder="Search..."
                 inputProps={{ 'aria-label': 'search' }}
-              ></StyledInputBased>
+              />
             </Search>
           </Stack>
           <Stack spacing={2}>
@@ -83,6 +100,8 @@ const Chats = () => {
           </Stack>
         </Stack>
       </Box>
+
+      {openDialog && <Friends open={openDialog} handleClose={hanldeCloseDialog}/>}
     </>
   );
 };
