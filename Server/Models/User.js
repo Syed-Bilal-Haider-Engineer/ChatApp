@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema(
     friends: {
       type: mongoose.Schema.ObjectId,
       ref:'User'
+    },
+    status: {
+      type:String,
+      enum: ["Online","Ofline"]
     }
   },
   {timestamps: true}
